@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بوابة المبرمج | Cyber Dev Hub</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #080e1d;
+--card-bg: #101a33;
+--text: #f8fafc;
+--muted: #94a3b8;
+--accent: #38bdf8;
+--accent2: #22d3ee;
+--cyber: #00ff88;
+--cyber-glow: rgba(0,255,136,0.3);
+--border: #1e2d4f;
+--danger: #ef4444;
+}
+[data-theme="light"] {
+--bg: #f1f5f9;
+--card-bg: #ffffff;
+--text: #0f172a;
+--muted: #64748b;
+--border: #e2e8f0;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
+body{background:var(--bg);color:var(--text);transition:0.4s;overflow-x:hidden}
+
+/* خلفية ماتريكس */
+#matrixCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:0.07;pointer-events:none}
+
+header{
+background: linear-gradient(135deg, rgba(16,26,51,0.9), rgba(8,14,29,0.95));
+backdrop-filter:blur(10px);
+padding:50px 20px 40px;
+text-align:center;
+border-bottom:1px solid var(--border);
+position:relative;
+}
+.top-actions{position:absolute;top:20px;left:20px;display:flex;gap:10px}
+.icon-btn{
+background:var(--card-bg);border:1px solid var(--border);color:var(--text);
+width:45px;height:45px;border-radius:50%;cursor:pointer;display:grid;place-items:center;
+transition:0.3s;
+}
+.icon-btn:hover{border-color:var(--accent);color:var(--accent);transform:rotate(15deg)}
+header h1{font-size:2.8rem;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--cyber));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--muted);max-width:650px;margin:10px auto 25px;font-size:1.15rem}
+
+.search-container{max-width:550px;margin:0 auto;position:relative}
+.search-container input{
+width:100%;padding:16px 50px 16px 20px;border-radius:40px;
+border:2px solid var(--border);background:var(--card-bg);color:var(--text);
+outline:none;font-size:1rem;transition:0.3s;
+}
+.search-container input:focus{border-color:var(--accent);box-shadow:0 0 20px rgba(56,189,248,0.3)}
+.search-container i{position:absolute;right:20px;top:50%;transform:translateY(-50%);color:var(--muted)}
+
+.container{max-width:1250px;margin:40px auto;padding:0 20px}
+
+/* Terminal Bar */
+.terminal{
+background:#020617;border:1px solid var(--border);border-radius:12px;
+padding:15px 20px;margin-bottom:40px;font-family:'JetBrains Mono',monospace;
+color:var(--cyber);box-shadow:0 0 20px var(--cyber-glow);
+}
+.terminal::before{content:'root@dev-hub:~# ';color:var(--accent)}
+#typing{border-right:2px solid var(--cyber);animation:blink 1s infinite}
+
+.section-title{
+font-size:1.9rem;margin:50px 0 20px;border-right:5px solid var(--accent);
+padding-right:15px;display:flex;align-items:center;gap:12px;
+}
+.section-title.cyber{border-color:var(--cyber);color:var(--cyber)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-bottom:50px}
+
+.card{
+background:var(--card-bg);border:1px solid var(--border);border-radius:14px;
+padding:22px;text-decoration:none;color:inherit;transition:0.35s ease;
+position:relative;overflow:hidden;display:flex;flex-direction:column;
+}
+.card::before{
+content:'';position:absolute;top:0;left:0;width:100%;height:2px;
+background:linear-gradient(90deg,var(--accent),var(--cyber));opacity:0;transition:0.3s
+}
+.card:hover{transform:translateY(-7px) scale(1.02);border-color:var(--accent);box-shadow:0 15px 30px rgba(0,0,0,0.3)}
+.card:hover::before{opacity:1}
+.card.cyber-card:hover{border-color:var(--cyber);box-shadow:0 0 25px var(--cyber-glow)}
+
+.card-header{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.card-header i{font-size:2.2rem;color:var(--accent)}
+.cyber-card .card-header i{color:var(--cyber)}
+.card-title{font-weight:700;font-size:1.25rem}
+.card-desc{color:var(--muted);font-size:0.92rem;flex-grow:1;margin-bottom:15px;line-height:1.7}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{padding:5px 11px;border-radius:20px;font-size:0.78rem;background:rgba(56,189,248,0.1);color:var(--accent);border:1px solid rgba(56,189,248,0.2)}
+.cyber-card .tag{background:rgba(0,255,136,0.1);color:var(--cyber);border-color:rgba(0,255,136,0.2)}
+
+.badge{position:absolute;top:12px;left:12px;font-size:0.7rem;padding:3px 8px;border-radius:6px;background:var(--danger);color:white;font-weight:700}
+
+footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:var(--muted)}
+@keyframes blink{50%{border-color:transparent}}
+@media(max-width:768px){header h1{font-size:1.9rem}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-theme="dark">
+<canvas id="matrixCanvas"></canvas>
+<header>
+<div class="top-actions">
+<button class="icon-btn" onclick="toggleTheme()" title="تغيير الوضع"><i class="fa-solid fa-circle-half-stroke"></i></button>
+<button class="icon-btn" onclick="toggleMatrix()" title="وضع الهكر"><i class="fa-solid fa-shield-halved"></i></button>
+</div>
+<h1><i class="fa-solid fa-terminal"></i> CYBER DEV HUB</h1>
+<p>منصة المطور الشاملة — برمجة، أمن سيبراني، ذكاء اصطناعي وأدوات اختراق أخلاقي في مكان واحد</p>
+<div class="search-container">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input type="text" id="searchInput" onkeyup="filterCards()" placeholder="ابحث: python, kali, nmap, bug bounty...">
+</div>
+</header>
+
+<div class="container">
+<div class="terminal">
+<span id="typing"></span>
+</div>
+
+<h2 class="section-title cyber"><i class="fa-solid fa-user-secret"></i> ترسانة الأمن السيبراني</h2>
+<div class="grid">
+<a href="https://www.kali.org/" target="_blank" class="card cyber-card">
+<span class="badge">OS</span>
+<div><div class="card-header"><i class="fa-brands fa-linux"></i><div class="card-title">Kali Linux</div></div><div class="card-desc">نظام التشغيل رقم 1 للهكر الأخلاقي، يحتوي 600+ أداة اختبار
