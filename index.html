@@ -1,4 +1,4 @@
-Put your HTML text here<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -515,7 +515,7 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 <div class="summary-card">
 <h3><i class="fa-brands fa-python" style="color:#38bdf8;"></i> 1. لغة بايثون (Python)</h3>
 <p><strong>الملخص:</strong> لغة عالية المستوى، سهلة القراءة والكتابة، تُستخدم بكثافة في الذكاء الاصطناعي، تحليل البيانات، وبناء سكربتات الأمان السيبراني.</p>
-<p><strong>المفاهيم الرئيسية:</strong> المتغيرات، الجمل الشرطية (if/else)، الحلقات التكرارية (for/while)، والدوال (Functions).</p>
+<p><strong>المفاهيم الرئيسية:</strong> المتغيرات، الجمل الشرطية (if/else), الحلقات التكرارية (for/while)، والدوال (Functions).</p>
 <div class="exercise-box">
 <h4><i class="fa-solid fa-dumbbell"></i> تمرين عملي مقترح:</h4>
 <p>اكتب برنامجاً يطلب من المستخدم إدخال كلمة المرور، فإذا كانت مطابقة لقيمة سرية مخزنة، يطبع رسالة ترحيبية بصلاحيات المدير، وإذا كانت خاطئة يطالب الإدخال مجدداً.</p>
@@ -817,7 +817,7 @@ function switchPage(pageId, btnElement) {
   const target = document.getElementById(pageId);
   if (target) {
     target.classList.add('active');
-    btnElement.classList.add('active');
+    if(btnElement) btnElement.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
@@ -897,7 +897,7 @@ let currentLang = 'python';
 function setLanguage(lang, btnElement) {
 currentLang = lang;
 document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
-btnElement.classList.add('active');
+if(btnElement) btnElement.classList.add('active');
 
 const lesson = lessonsData[lang];
 document.getElementById('lessonTitle').innerText = lesson.title;
