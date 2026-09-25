@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Put your HTML text here<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -15,13 +15,25 @@
 --accent: #38bdf8;
 --accent2: #22d3ee;
 --cyber: #00ff88;
---cyber-glow: rgba(0,255,136,0.3);
+--cyber-glow: rgba(0,255,136,0.4);
 --border: #1e2d4f;
 --danger: #ef4444;
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
-body{background:var(--bg);color:var(--text);overflow-x:hidden}
+body{background:var(--bg);color:var(--text);overflow-x:hidden;transition: background 0.5s ease;}
+
+@keyframes flashAlert {
+  0% { background-color: rgba(239, 68, 68, 0.25); box-shadow: inset 0 0 50px rgba(239, 68, 68, 0.8); }
+  50% { background-color: rgba(0, 255, 136, 0.25); box-shadow: inset 0 0 50px rgba(0, 255, 136, 0.8); }
+  100% { background-color: rgba(239, 68, 68, 0.25); box-shadow: inset 0 0 50px rgba(239, 68, 68, 0.8); }
+}
+
+body.alarm-active {
+  animation: flashAlert 0.8s infinite linear;
+}
+
 #matrixCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:0.07;pointer-events:none}
+
 header{
 background: linear-gradient(135deg, rgba(16,26,51,0.9), rgba(8,14,29,0.95));
 backdrop-filter:blur(10px);
@@ -32,7 +44,6 @@ border-bottom:1px solid var(--border);
 header h1{font-size:2.3rem;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--cyber));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 header p{color:var(--muted);max-width:650px;margin:10px auto;font-size:1rem}
 
-/* شريط التنقل بين الصفحات */
 .nav-tabs {
 display: flex;
 justify-content: center;
@@ -60,6 +71,24 @@ background: var(--cyber);
 color: #000;
 border-color: var(--cyber);
 box-shadow: 0 0 15px var(--cyber-glow);
+}
+
+.tab-btn.hack-alarm-btn {
+background: #ef4444 !important;
+color: #fff !important;
+border-color: #f87171 !important;
+box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+animation: pulseBtn 1.5s infinite;
+}
+.tab-btn.hack-alarm-btn:hover {
+background: #dc2626 !important;
+box-shadow: 0 0 25px rgba(239, 68, 68, 0.9);
+}
+
+@keyframes pulseBtn {
+0% { transform: scale(1); }
+50% { transform: scale(1.05); }
+100% { transform: scale(1); }
 }
 
 .page-section { display: none; }
@@ -98,7 +127,6 @@ transition:0.3s;
 .cve-card:hover{border-color:var(--cyber);box-shadow:0 0 15px var(--cyber-glow)}
 .cve-info h4{color:var(--cyber);font-size:1.1rem;margin-bottom:5px;font-family:'JetBrains Mono',monospace}
 .cve-info p{color:var(--muted);font-size:0.9rem}
-.cve-badge{padding:5px 12px;border-radius:20px;font-size:0.75rem;font-weight:700;background:rgba(239,68,68,0.2);color:#ef4444;border:1px solid rgba(239,68,68,0.3)}
 
 .service-card{
 background:linear-gradient(135deg, #0d2318, #101a33);border:1px solid rgba(0,255,136,0.3);
@@ -131,7 +159,6 @@ padding:22px;transition:0.35s ease;position:relative;overflow:hidden;display:fle
 .tag{padding:4px 10px;border-radius:20px;font-size:0.75rem;background:rgba(56,189,248,0.1);color:var(--accent);border:1px solid rgba(56,189,248,0.2)}
 .cyber-tag{background:rgba(0,255,136,0.1);color:var(--cyber);border-color:rgba(0,255,136,0.2)}
 
-/* تصميم محرر الأوامر التفاعلي للغات البرمجة */
 .ide-container {
 background: var(--card-bg);
 border: 1px solid var(--border);
@@ -210,7 +237,6 @@ font-size: 0.95rem;
 white-space: pre-wrap;
 }
 
-/* تنسيق صفحة الملخصات والتمارين */
 .summary-card {
 background: var(--card-bg);
 border: 1px solid var(--border);
@@ -231,8 +257,7 @@ margin-top: 15px;
 .exercise-box h4 { color: var(--cyber); font-size: 1.05rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
 .exercise-box p { color: var(--text); font-size: 0.93rem; margin: 0; }
 
-/* تصميم الأوامر المشترك (Termux & Kali) */
-.tools-container { max-width: 900px; margin: 0 auto; }
+.tools-container { max-width: 950px; margin: 0 auto; }
 .command-box {
 background: #020617;
 border: 1px solid var(--border);
@@ -246,16 +271,17 @@ gap: 15px;
 transition: 0.3s;
 }
 .command-box:hover { border-color: var(--cyber); box-shadow: 0 0 15px var(--cyber-glow); }
-.command-info h4 { color: var(--cyber); font-size: 1.1rem; margin-bottom: 5px; }
+.command-info h4 { color: var(--cyber); font-size: 1.05rem; margin-bottom: 5px; }
 .command-info code {
 font-family: 'JetBrains Mono', monospace;
 color: var(--accent2);
-font-size: 0.95rem;
+font-size: 0.92rem;
 background: rgba(56,189,248,0.1);
 padding: 4px 8px;
 border-radius: 6px;
 display: inline-block;
 margin-top: 5px;
+word-break: break-all;
 }
 .copy-btn {
 background: var(--accent);
@@ -270,9 +296,43 @@ display: flex;
 align-items: center;
 gap: 6px;
 white-space: nowrap;
+text-decoration: none;
 }
 .copy-btn:hover { background: var(--cyber); transform: scale(1.05); }
 .copy-btn.copied { background: var(--cyber); color: #000; }
+
+#skullModal {
+display: none;
+position: fixed;
+top: 0; left: 0; width: 100%; height: 100%;
+background: rgba(0,0,0,0.85);
+z-index: 99999;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+backdrop-filter: blur(8px);
+}
+.skull-icon {
+font-size: 8rem;
+color: #ef4444;
+text-shadow: 0 0 30px #ef4444, 0 0 60px #00ff88;
+animation: skullGlitch 0.2s infinite alternate;
+}
+@keyframes skullGlitch {
+  0% { transform: scale(1) translate(2px, -2px); filter: hue-rotate(0deg); }
+  50% { transform: scale(1.1) translate(-2px, 2px); filter: hue-rotate(90deg); }
+  100% { transform: scale(0.95) translate(0px, 0px); filter: hue-rotate(180deg); }
+}
+.alarm-text {
+font-size: 2rem;
+font-weight: 800;
+color: #fff;
+margin-top: 20px;
+letter-spacing: 2px;
+text-shadow: 0 0 20px #ef4444;
+font-family: 'JetBrains Mono', monospace;
+text-align: center;
+}
 
 footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:var(--muted);margin-top:40px}
 @media(max-width:768px){.grid{grid-template-columns:1fr}.command-box{flex-direction:column;align-items:flex-start}}
@@ -282,22 +342,29 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 
 <canvas id="matrixCanvas"></canvas>
 
+<div id="skullModal">
+  <i class="fa-solid fa-skull-crossbones skull-icon"></i>
+  <div class="alarm-text">SYSTEM HACK IN PROGRESS...</div>
+  <button onclick="stopAlarm()" style="margin-top: 30px; padding: 12px 25px; background: #ef4444; color: #fff; border: none; font-weight: 700; border-radius: 10px; cursor: pointer;">إيقاف وضع الإنذار</button>
+</div>
+
 <header>
 <h1><i class="fa-solid fa-terminal"></i> CYBER DEV HUB</h1>
 <p>منصة المطور والأمن السيبراني المتطورة — فحص الثغرات، تعلم البرمجة، وأدوات الاختراق الأخلاقي</p>
 </header>
 
-<!-- أزرار التنقل بين الصفحات الست -->
 <div class="nav-tabs">
 <button class="tab-btn active" onclick="switchPage('home', this)"><i class="fa-solid fa-house"></i> الرئيسية</button>
 <button class="tab-btn" onclick="switchPage('services', this)"><i class="fa-solid fa-briefcase"></i> الخدمات والأرباح</button>
 <button class="tab-btn" onclick="switchPage('lessons', this)"><i class="fa-solid fa-graduation-cap"></i> بيئة البرمجة</button>
 <button class="tab-btn" onclick="switchPage('summaries', this)"><i class="fa-solid fa-book-open"></i> الملخصات والتمارين</button>
-<button class="tab-btn" onclick="switchPage('termux', this)"><i class="fa-solid fa-mobile-screen"></i> أوامر Termux</button>
-<button class="tab-btn" onclick="switchPage('kali', this)"><i class="fa-brands fa-linux"></i> أوامر Kali Linux</button>
+<button class="tab-btn" onclick="switchPage('arsenal', this)" id="arsenalTabBtn"><i class="fa-solid fa-shield-cat"></i> الترسانة الأمنية (50)</button>
+<button class="tab-btn" onclick="switchPage('termux', this)"><i class="fa-solid fa-mobile-screen"></i> أوامر Termux (50)</button>
+<button class="tab-btn" onclick="switchPage('kali', this)"><i class="fa-brands fa-linux"></i> أوامر Kali Linux (50)</button>
+<button class="tab-btn hack-alarm-btn" onclick="triggerCyberAlarm()"><i class="fa-solid fa-skull"></i> قم بالاختراق 💀</button>
 </div>
 
-<!-- الصفحة الأولى: الرئيسية -->
+<!-- الرئيسية -->
 <div id="home" class="page-section active">
 <div class="container">
 <div class="terminal">
@@ -368,7 +435,7 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 </div>
 </div>
 
-<!-- صفحة الخدمات والأرباح -->
+<!-- الخدمات والأرباح -->
 <div id="services" class="page-section">
 <div class="container tools-container">
 <h2 class="section-title cyber"><i class="fa-solid fa-briefcase"></i> قسم الخدمات والأرباح التقنية</h2>
@@ -404,7 +471,7 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 </div>
 </div>
 
-<!-- بيئة البرمجة التفاعلية -->
+<!-- بيئة البرمجة -->
 <div id="lessons" class="page-section">
 <div class="container">
 <h2 class="section-title cyber"><i class="fa-solid fa-graduation-cap"></i> بيئة تشغيل أكواد لغات البرمجة الحية</h2>
@@ -416,6 +483,7 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 <button class="lang-tab" onclick="setLanguage('javascript', this)"><i class="fa-brands fa-js"></i> JavaScript</button>
 <button class="lang-tab" onclick="setLanguage('html', this)"><i class="fa-brands fa-html5"></i> HTML / CSS</button>
 <button class="lang-tab" onclick="setLanguage('bash', this)"><i class="fa-solid fa-terminal"></i> Bash / Shell</button>
+<button class="lang-tab" onclick="setLanguage('php', this)"><i class="fa-brands fa-php"></i> PHP</button>
 </div>
 
 <div id="lessonInfo" style="margin-bottom: 20px; background: #070c1b; padding: 15px; border-radius: 10px; border: 1px solid var(--border);">
@@ -438,13 +506,12 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 </div>
 </div>
 
-<!-- الصفحة الجديدة: ملخصات لغات البرمجة والتمارين الشاملة -->
+<!-- الملخصات -->
 <div id="summaries" class="page-section">
 <div class="container tools-container">
-<h2 class="section-title cyber"><i class="fa-solid fa-book-open"></i> ملخصات لغات البرمجة والتمارين العملية</h2>
-<p style="color:var(--muted); margin-bottom: 25px;">دليلك الشامل لمراجعة أساسيات لغات البرمجة واختبار مهاراتك عبر التمارين التطبيقية:</p>
+<h2 class="section-title cyber"><i class="fa-solid fa-book-open"></i> ملخصات لغات البرمجة والتمارين العملية الشاملة</h2>
+<p style="color:var(--muted); margin-bottom: 25px;">دليلك الشامل لمراجعة أساسيات لغات البرمجة الرئيسية واختبار مهاراتك عبر التمارين التطبيقية:</p>
 
-<!-- ملخص وتمرين بايثون -->
 <div class="summary-card">
 <h3><i class="fa-brands fa-python" style="color:#38bdf8;"></i> 1. لغة بايثون (Python)</h3>
 <p><strong>الملخص:</strong> لغة عالية المستوى، سهلة القراءة والكتابة، تُستخدم بكثافة في الذكاء الاصطناعي، تحليل البيانات، وبناء سكربتات الأمان السيبراني.</p>
@@ -455,7 +522,6 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 </div>
 </div>
 
-<!-- ملخص وتمرين جافاسكريبت -->
 <div class="summary-card">
 <h3><i class="fa-brands fa-js" style="color:#f7df1e;"></i> 2. لغة جافاسكريبت (JavaScript)</h3>
 <p><strong>الملخص:</strong> لغة الويب الأساسية المسؤولة عن التفاعل والحركة في صفحات الإنترنت، وتُستخدم كذلك في تطوير خوادم السيرفرات (Node.js).</p>
@@ -466,9 +532,8 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 </div>
 </div>
 
-<!-- ملخص وتمرين الويب -->
 <div class="summary-card">
-<h3><i class="fa-brands fa-html5" style="color:#f97316;"></i> 3. لغات الويب (HTML / CSS)</h3>
+<h3><i class="fa-brands fa-html5" style="color:#f97316;"></i> 3. لغات الويب (HTML5 / CSS3)</h3>
 <p><strong>الملخص:</strong> HTML مسؤولة عن بناء الهيكل العظمي والنصوص للصفحة، بينما تتولى CSS تنسيق الألوان، الخطوط، والتخطيطات المتجاوبة.</p>
 <p><strong>المفاهيم الرئيسية:</strong> الوسوم والعناصر، الصندوق الهيكلي (Box Model)، والتصميم المتجاوب (Flexbox / Grid).</p>
 <div class="exercise-box">
@@ -477,7 +542,6 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 </div>
 </div>
 
-<!-- ملخص وتمرين باش -->
 <div class="summary-card">
 <h3><i class="fa-solid fa-terminal" style="color:#00ff88;"></i> 4. لغة الأوامر (Bash / Shell Scripting)</h3>
 <p><strong>الملخص:</strong> لغة الأوامر المستخدمة في أنظمة لينكس وتيرامكس (Termux) لأتمتة المهام اليومية وإدارة السيرفرات بسرعة فائقة.</p>
@@ -488,94 +552,56 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 </div>
 </div>
 
+<div class="summary-card">
+<h3><i class="fa-brands fa-php" style="color:#8993be;"></i> 5. لغة البرمجة الخلفية PHP</h3>
+<p><strong>الملخص:</strong> لغة خوادم واسعة الانتشار تُستخدم لبناء مواقع الويب الديناميكية وإدارة قواعد البيانات، وفهمها أساسي لاكتشاف ثغرات SQLi و Web Shells.</p>
+<p><strong>المفاهيم الرئيسية:</strong> المعاملات (Superglobals like $_GET/$_POST)، الاتصال بقواعد البيانات MySQL، وإدارة الجلسات Sessions.</p>
+<div class="exercise-box">
+<h4><i class="fa-solid fa-dumbbell"></i> تمرين عملي مقترح:</h4>
+<p>اكتب سكربت نموذج تسجيل دخول يستقبل اسم المستخدم وكلمة المرور من نموذج HTML ويتحقق من صحتها آمنياً.</p>
+</div>
+</div>
+
+<div class="summary-card">
+<h3><i class="fa-solid fa-code" style="color:#ef4444;"></i> 6. لغة C / C++ للأمن السيبراني</h3>
+<p><strong>الملخص:</strong> لغات منخفضة المستوى تُستخدم لتطوير البرمجيات الخبيثة (Malware) والهندسة العكسية وفهم كيفية استغلال ذاكرة التخزين (Buffer Overflow).</p>
+<p><strong>المفاهيم الرئيسية:</strong> المؤشرات (Pointers)، إدارة الذاكرة المباشرة (Memory Allocation)، والتعامل مع بروتوكولات Sockets.</p>
+<div class="exercise-box">
+<h4><i class="fa-solid fa-dumbbell"></i> تمرين عملي مقترح:</h4>
+<p>اكتب برنامج بسيط بلغة C يستقبل مدخلات النص من المستخدم ويتأكد من عدم تجاوز الحجم المخصص للمصفوفة لتجنب ثغرة طفح المخزن الموقت.</p>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- الترسانة -->
+<div id="arsenal" class="page-section">
+<div class="container">
+<h2 class="section-title cyber"><i class="fa-solid fa-shield-cat"></i> الترسانة الأمنية الشاملة (50 أداة مضمونة للتحميل)</h2>
+<p style="color:var(--muted); margin-bottom: 25px;">ترسانة مكتملة تحتوي على 50 أداة أمنية معتمدة ومباشرة للاختراق الأخلاقي وفحص الثغرات مع روابط التنزيل المباشرة:</p>
+
+<div class="grid" id="arsenalToolsGrid"></div>
 </div>
 </div>
 
 <!-- أوامر Termux -->
 <div id="termux" class="page-section">
 <div class="container tools-container">
-<h2 class="section-title cyber"><i class="fa-solid fa-terminal"></i> دليل أوامر Termux الأساسية والمتقدمة</h2>
-<p style="color:var(--muted); margin-bottom: 25px;">انسخ الأوامر التالية مباشرة واستخدمها في تطبيق Termux على هاتفك بنقرة واحدة:</p>
+<h2 class="section-title cyber"><i class="fa-solid fa-terminal"></i> دليل أوامر Termux الشامل (50 أمر مكتمل)</h2>
+<p style="color:var(--muted); margin-bottom: 25px;">قائمة الأوامر الـ 50 المكتملة لإدارة بيئة تيرموكس على الهاتف بنقرة واحدة للنسخ:</p>
 
-<div class="command-box">
-<div class="command-info">
-<h4>تحديث وترقية الحزم الأساسية</h4>
-<code>pkg update && pkg upgrade -y</code>
-</div>
-<button class="copy-btn" onclick="copyCode(this, 'pkg update && pkg upgrade -y')"><i class="fa-solid fa-copy"></i> نسخ الأمر</button>
-</div>
-
-<div class="command-box">
-<div class="command-info">
-<h4>منح الصلاحيات وتثبيت التخزين (Storage Setup)</h4>
-<code>termux-setup-storage</code>
-</div>
-<button class="copy-btn" onclick="copyCode(this, 'termux-setup-storage')"><i class="fa-solid fa-copy"></i> نسخ الأمر</button>
-</div>
-
-<div class="command-box">
-<div class="command-info">
-<h4>تثبيت لغة البرمجة Python</h4>
-<code>pkg install python python-pip -y</code>
-</div>
-<button class="copy-btn" onclick="copyCode(this, 'pkg install python python-pip -y')"><i class="fa-solid fa-copy"></i> نسخ الأمر</button>
-</div>
-
-<div class="command-box">
-<div class="command-info">
-<h4>تثبيت أداة فحص الشبكات Nmap</h4>
-<code>pkg install nmap -y</code>
-</div>
-<button class="copy-btn" onclick="copyCode(this, 'pkg install nmap -y')"><i class="fa-solid fa-copy"></i> نسخ الأمر</button>
-</div>
-
-<div class="command-box">
-<div class="command-info">
-<h4>تثبيت أداة Git لتحميل السكريبتات</h4>
-<code>pkg install git -y</code>
-</div>
-<button class="copy-btn" onclick="copyCode(this, 'pkg install git -y')"><i class="fa-solid fa-copy"></i> نسخ الأمر</button>
-</div>
+<div id="termuxCommandsList"></div>
 </div>
 </div>
 
 <!-- أوامر Kali Linux -->
 <div id="kali" class="page-section">
 <div class="container tools-container">
-<h2 class="section-title cyber"><i class="fa-brands fa-linux"></i> مرجع أوامر وقوائم Kali Linux للأمن السيبراني</h2>
-<p style="color:var(--muted); margin-bottom: 25px;">دليلك لأهم أوامر نظام كالي لينكس وأدوات اختبار الاختراق الشهيرة:</p>
+<h2 class="section-title cyber"><i class="fa-brands fa-linux"></i> مرجع أوامر Kali Linux المتقدم (50 أمر مكتمل)</h2>
+<p style="color:var(--muted); margin-bottom: 25px;">مجموعة الـ 50 أمراً الخاصة بالااختراق الأخلاقي والشبكات وإدارة نظام كالي لينكس:</p>
 
-<div class="command-box">
-<div class="command-info">
-<h4>تحديث مستودعات النظام وحزم التثبيت</h4>
-<code>sudo apt update && sudo apt upgrade -y</code>
-</div>
-<button class="copy-btn" onclick="copyCode(this, 'sudo apt update && sudo apt upgrade -y')"><i class="fa-solid fa-copy"></i> نسخ الأمر</button>
-</div>
-
-<div class="command-box">
-<div class="command-info">
-<h4>فحص شبكة أو هدف محدد باستخدام Nmap</h4>
-<code>nmap -sV -sC -T4 target_ip</code>
-</div>
-<button class="copy-btn" onclick="copyCode(this, 'nmap -sV -sC -T4 target_ip')"><i class="fa-solid fa-copy"></i> نسخ الأمر</button>
-</div>
-
-<div class="command-box">
-<div class="command-info">
-<h4>البحث عن ثغرات الويب باستخدام Nikto</h4>
-<code>nikto -h http://example.com</code>
-</div>
-<button class="copy-btn" onclick="copyCode(this, 'nikto -h http://example.com')"><i class="fa-solid fa-copy"></i> نسخ الأمر</button>
-</div>
-
-<div class="command-box">
-<div class="command-info">
-<h4>بدء إطار عمل الاختراق الشهير Metasploit</h4>
-<code>msfconsole</code>
-</div>
-<button class="copy-btn" onclick="copyCode(this, 'msfconsole')"><i class="fa-solid fa-copy"></i> نسخ الأمر</button>
-</div>
+<div id="kaliCommandsList"></div>
 </div>
 </div>
 
@@ -584,20 +610,248 @@ footer{text-align:center;padding:30px;border-top:1px solid var(--border);color:v
 </footer>
 
 <script>
-// نظام التبديل بين الصفحات
+const arsenalTools = [
+  { name: "1. Burp Suite Community", cat: "Web Proxy", desc: "الأداة الأولى عالمياً لتحليل واعتراض حزم الويب واكتشاف ثغرات الويب.", link: "https://portswigger.net/burp/communitydownload" },
+  { name: "2. Nmap Scanner", cat: "Network", desc: "أداة فحص الشبكات والمنافذ المفتوحة وكشف الخدمات الشغالة.", link: "https://nmap.org/download.html" },
+  { name: "3. Metasploit Framework", cat: "Exploitation", desc: "أقوى إطار عمل لتطوير واختبار استغلال الثغرات الأمنية.", link: "https://www.metasploit.com/" },
+  { name: "4. Wireshark Network Analyzer", cat: "Sniffing", desc: "محلل حزم الشبكات الشهير لالتقاط وفحص الترافيك اللحظي.", link: "https://www.wireshark.org/download.html" },
+  { name: "5. SQLmap Automated SQLi", cat: "Database", desc: "أداة بايثون أوتوماتيكية لاكتشاف واستغلال ثغرات حقن قواعد البيانات SQL.", link: "https://github.com/sqlmapproject/sqlmap" },
+  { name: "6. Hydra Password Cracker", cat: "Brute Force", desc: "أداة سريعة جداً للتخمين وكسر كلمات السر عبر بروتوكولات متعددة.", link: "https://github.com/vanhauser-thc/thc-hydra" },
+  { name: "7. Nuclei Vulnerability Scanner", cat: "Scanner", desc: "مُحرك فحص ثغرات سريع يعتمد على قوالب YAML مخصصة.", link: "https://github.com/projectdiscovery/nuclei" },
+  { name: "8. Nikto Web Scanner", cat: "Web", desc: "فاحص سيرفرات الويب لاكتشاف الملفات الخطرة والإعدادات الضعيفة.", link: "https://github.com/sullo/nikto" },
+  { name: "9. Gobuster Directory Brute", cat: "Recon", desc: "أداة سريعة مكتوبة بلغة Go للتخمين على المجلدات والمسارات الخفية.", link: "https://github.com/OJ/gobuster" },
+  { name: "10. John The Ripper", cat: "Cracker", desc: "أداة كسر التشفير والتخمين على الهاشات المشهورة.", link: "https://www.openwall.com/john/" },
+  { name: "11. Hashcat Advanced Recovery", cat: "GPU Cracker", desc: "أسرع أداة لكسر الهاشات والرموز باستخدام قوة كروت الشاشة.", link: "https://hashcat.net/hashcat/" },
+  { name: "12. Airgeddon Wireless Audit", cat: "Wi-Fi", desc: "سكربت متكامل لمراجعة واختبار أمان شبكات الواي فاي.", link: "https://github.com/v1s1t0r1sh3r3/airgeddon" },
+  { name: "13. OWASP ZAP (Zaproxy)", cat: "Web Pentest", desc: "أداة أوبن سورس ممتازة من منظمة OWASP لفحص تطبيقات الويب.", link: "https://www.zaproxy.org/download/" },
+  { name: "14. Subfinder Subdomain Discovery", cat: "OSINT", desc: "أداة اكتشاف النطاقات الفرعية العائدة للمواقع بشكل سريع.", link: "https://github.com/projectdiscovery/subfinder" },
+  { name: "15. Amass Network Mapping", cat: "Recon", desc: "أداة رسم الخرائط واستكشاف الأصول الرقمية المتقدمة.", link: "https://github.com/owasp-amass/amass" },
+  { name: "16. Ghidra Reverse Engineering", cat: "Reversing", desc: "إطار الهندسة العكسية وتحليل البرمجيات المطور من NSA.", link: "https://ghidra-sre.org/" },
+  { name: "17. Commix Command Injection", cat: "Exploitation", desc: "أداة أوتوماتيكية لاكتشاف واستغلال ثغرات حقن الأوامر Command Injection.", link: "https://github.com/commixproject/commix" },
+  { name: "18. Social Engineer Toolkit (SET)", cat: "OSINT/Phishing", desc: "إطار الاختبارات الخاصة بالهندسة الاجتماعية والهجمات البشرية.", link: "https://github.com/trustedsec/social-engineer-toolkit" },
+  { name: "19. Volatility Memory Forensics", cat: "Forensics", desc: "إطار التحقيق الجنائي الرقمي للتحليل المتقدم للذاكرة العشوائية RAM.", link: "https://github.com/volatilityfoundation/volatility3" },
+  { name: "20. Wpscan WordPress Scanner", cat: "CMS Pentest", desc: "أداة فحص مواقع الووردبريس واكتشاف ثغرات الإضافات والقوالب.", link: "https://github.com/wpscanteam/wpscan" },
+  { name: "21. Kismet Wireless Sniffer", cat: "Wi-Fi", desc: "مراقب شبكات أجهزة الواي فاي والبلوتوث والتقاط الحزم الهوائية.", link: "https://www.kismetwireless.net/" },
+  { name: "22. Aircrack-ng Suite", cat: "Wi-Fi", desc: "مجموعة أدوات تقييم أمان شبكات Wi-Fi وفك تشفير المفاتيح.", link: "https://www.aircrack-ng.org/" },
+  { name: "23. Netcat (NC)", cat: "Networking", desc: "سكين الجيش السويسري للشبكات لقراءة وكتابة البيانات عبر الاتصالات.", link: "https://nmap.org/ncat/" },
+  { name: "24. Masscan Port Scanner", cat: "Scanner", desc: "أسرع فاحص منافذ شبكات في العالم يستطيع مسح الإنترنت بالكامل.", link: "https://github.com/robertdavidgraham/masscan" },
+  { name: "25. Dirsearch Web Path Scanner", cat: "Recon", desc: "أداة ممتازة قائمة على Python للتخمين على المجلدات والمسارات.", link: "https://github.com/maurosoria/dirsearch" },
+  { name: "26. Bettercap MITM Tool", cat: "Sniffing", desc: "إطار العمل المتقدم لتنفيذ هجمات رجل في المنتصف (MITM).", link: "https://www.bettercap.org/" },
+  { name: "27. Responder Poisoner", cat: "Network", desc: "أداة استجابة LLMNR/NBT-NS/mDNS للالتقاط التلقائي للرموز والتشفيرات.", link: "https://github.com/lgandx/Responder" },
+  { name: "28. BloodHound Active Directory", cat: "AD Security", desc: "أداة تحليل ورسم خرائط علاقات الصلاحيات في أنظمة Active Directory.", link: "https://github.com/BloodHoundAD/BloodHound" },
+  { name: "29. Mimikatz Credentials Extraction", cat: "Post Exploit", desc: "استخراج كلمات السر والهاشات والرموز من ذاكرة نظام Windows.", link: "https://github.com/gentilkiwi/mimikatz" },
+  { name: "30. Empire C2 Framework", cat: "Post Exploit", desc: "إطار التحكم والسيطرة المعتمد على PowerShell و Python.", link: "https://github.com/BC-SECURITY/Empire" },
+  { name: "31. FFPB / FFUF Web Fuzzer", cat: "Web Fuzzing", desc: "أداة Fast Web Fuzzer السريعة لاكتشاف الملفات والثغرات في النطاقات.", link: "https://github.com/ffuf/ffuf" },
+  { name: "32. AutoRecon Automated Enum", cat: "Recon", desc: "أداة أتمتة عمليات استكشاف المضيفين والخدمات بشكل شامل.", link: "https://github.com/Tib3rius/AutoRecon" },
+  { name: "33. Radare2 Reverse Framework", cat: "Reversing", desc: "مجموعة أدوات الهندسة العكسية القوية للغاية لسطر الأوامر.", link: "https://www.radare.org/" },
+  { name: "34. Cutter GUI for Radare2", cat: "Reversing", desc: "الواجهة الرسومية الحديثة والمريحة لمحرك الهندسة العكسية Radare2.", link: "https://cutter.re/" },
+  { name: "35. APKTool Android Decompiler", cat: "Mobile", desc: "أداة الهندسة العكسية لتطبيقات أندرويد وتحليل ملفات APK.", link: "https://ibotpeaches.github.io/Apktool/" },
+  { name: "36. MobSF Mobile Security", cat: "Mobile", desc: "إطار العمل الأوتوماتيكي الشامل لاختبار أمان تطبيقات الموبايل.", link: "https://github.com/MobSF/Mobile-Security-Framework-MobSF" },
+  { name: "37. Frida Dynamic Instrumentation", cat: "Mobile/Reverse", desc: "أداة الحقن الديناميكي واختبار التطبيقات أثناء التشغيل اللحظي.", link: "https://frida.re/" },
+  { name: "38. Maltego OSINT Intelligence", cat: "OSINT", desc: "أداة رسم العلاقات والتحقيق التفاعلي واستخراج المعلومات المفتوحة.", link: "https://www.maltego.com/" },
+  { name: "39. Sherloq Image Forensics", cat: "Forensics", desc: "أداة مفتوحة المصدر للتحقيق الجنائي الرقمي واكتشاف التلاعب بالصور.", link: "https://github.com/GuidoMaggio/sherloq" },
+  { name: "40. Steghide Hidden Data", cat: "Steganography", desc: "أداة إخفاء واستخراج البيانات المشفرة داخل الصور والملفات الصوتية.", link: "https://steghide.sourceforge.net/" },
+  { name: "41. Beef XSS Exploitation", cat: "Web Pentest", desc: "إطار اختبار استغلال ثغرات المتصفح وحقن سكريبتات XSS.", link: "https://beefproject.com/" },
+  { name: "42. Searchsploit Exploit-DB", cat: "Search", desc: "أداة البحث الأوفلاين في قاعدة ثغرات واستغلالات Exploit-DB.", link: "https://www.exploit-db.com/" },
+  { name: "43. CrackMapExec Network Swiss", cat: "AD Pentest", desc: "أداة أتمتة تقييم أمان شبكات ومجالات الشركات الممتدة.", link: "https://github.com/byt3bl33d3r/CrackMapExec" },
+  { name: "44. Impacket Python Network", cat: "Protocols", desc: "حزمة مكتبات بايثون مخصصة للتعامل مع بروتوكولات الشبكات المنخفضة.", link: "https://github.com/fortra/impacket" },
+  { name: "45. Evil-WinRM Shell", cat: "Remote Shell", desc: "أداة الاتصال بريموت شيل الآمن لنظام Windows الخصيصية للاختبار.", link: "https://github.com/Hackplayers/evil-winrm" },
+  { name: "46. Yersinia Network Attack", cat: "Layer 2", desc: "أداة تحليل واستغلال ثغرات بروتوكولات الطبقة الثانية (Layer 2).", link: "https://github.com/Yersinia/yersinia" },
+  { name: "47. Chisel TCP/UDP Tunnel", cat: "Pivoting", desc: "أداة إنشاء أنفاق TCP/UDP سريعة للغاية عبر HTTP للتنقل داخل الشبكة.", link: "https://github.com/jpillora/chisel" },
+  { name: "48. Ligolo-ng Tunneling", cat: "Pivoting", desc: "أداة التوجيه والانتقال الداخلي المتطورة للشبكات الالتفافية.", link: "https://github.com/nico-cha30/ligolo-ng" },
+  { name: "49. Ceca3 / Cupp Password Dictionary", cat: "Wordlists", desc: "مولد قواميس التخمين المخصصة المعتمدة على معلومات الهدف الشخصية.", link: "https://github.com/Mebus/cupp" },
+  { name: "50. PhoneSploit ADB Control", cat: "Mobile Pentest", desc: "أداة استغلال واختبار منافذ ADB المفتوحة على أجهزة الأندرويد.", link: "https://github.com/ASEC-STUDIO/PhoneSploit" }
+];
+
+function renderArsenalTools() {
+  const container = document.getElementById('arsenalToolsGrid');
+  if(!container) return;
+  container.innerHTML = "";
+  arsenalTools.forEach(tool => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div>
+        <div class="card-title">${tool.name} <i class="fa-solid fa-download" style="font-size:1rem; color:var(--cyber);"></i></div>
+        <div class="card-desc">${tool.desc}</div>
+      </div>
+      <div>
+        <div class="tags" style="margin-bottom:12px;"><span class="tag cyber-tag">${tool.cat}</span></div>
+        <a href="${tool.link}" target="_blank" class="copy-btn" style="text-align:center; justify-content:center;"><i class="fa-solid fa-box-open"></i> تحميل الأداة / المصدر</a>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+const termuxCmds = [
+  { name: "1. تحديث قائمة الحزم", cmd: "pkg update" },
+  { name: "2. ترقية الحزم المثبتة", cmd: "pkg upgrade -y" },
+  { name: "3. منح صلاحيات التخزين للهاتف", cmd: "termux-setup-storage" },
+  { name: "4. تثبيت لغة بايثون Python 3", cmd: "pkg install python -y" },
+  { name: "5. تثبيت الإصدار القديم Python 2", cmd: "pkg install python2 -y" },
+  { name: "6. تثبيت أداة Git لتحميل المشاريع", cmd: "pkg install git -y" },
+  { name: "7. تثبيت أداة Curl لجلب البيانات", cmd: "pkg install curl -y" },
+  { name: "8. تثبيت أداة Wget لتحميل الملفات", cmd: "pkg install wget -y" },
+  { name: "9. تثبيت أداة Nmap لفحص الشبكات", cmd: "pkg install nmap -y" },
+  { name: "10. تثبيت محرر النصوص Nano", cmd: "pkg install nano -y" },
+  { name: "11. تثبيت محرر النصوص VIM", cmd: "pkg install vim -y" },
+  { name: "12. تثبيت لغة PHP", cmd: "pkg install php -y" },
+  { name: "13. تثبيت لغة Perl", cmd: "pkg install perl -y" },
+  { name: "14. تثبيت محرك Ruby", cmd: "pkg install ruby -y" },
+  { name: "15. تثبيت لغة Golang", cmd: "pkg install golang -y" },
+  { name: "16. تثبيت أداة OpenSSH للاتصال البعيد", cmd: "pkg install openssh -y" },
+  { name: "17. تثبيت أداة Netcat للمنافذ", cmd: "pkg install netcat -y" },
+  { name: "18. تثبيت أداة Clang لتجميع أكواد C/C++", cmd: "pkg install clang -y" },
+  { name: "19. تثبيت أداة Zip لضغط الملفات", cmd: "pkg install zip unzip -y" },
+  { name: "20. تثبيت أداة Tar لأرشفت الملفات", cmd: "pkg install tar -y" },
+  { name: "21. عرض كافة الملفات بما فيها الخفية", cmd: "ls -la" },
+  { name: "22. معرفة المسار الحالي للعمل", cmd: "pwd" },
+  { name: "23. تنظيف شاشة التيرمنال", cmd: "clear" },
+  { name: "24. إنشاء مجلد جديد", cmd: "mkdir folder_name" },
+  { name: "25. حذف مجلد فارغ", cmd: "rmdir folder_name" },
+  { name: "26. حذف ملف أو مجلد مع المحتويات", cmd: "rm -rf item_name" },
+  { name: "27. نسخ ملف من مكان لآخر", cmd: "cp file.txt /sdcard/" },
+  { name: "28. نقل أو إعادة تسمية ملف", cmd: "mv old.txt new.txt" },
+  { name: "29. عرض معلومات المعالج والذاكرة", cmd: "neofetch" },
+  { name: "30. تثبيت أداة Neofetch لاستعراض النظام", cmd: "pkg install neofetch -y" },
+  { name: "31. استعراض العمليات الشغالة بالخلفية", cmd: "top" },
+  { name: "32. تثبيت أداة Htop المحسنة للعمليات", cmd: "pkg install htop -y" },
+  { name: "33. قراءة محتوى ملف نصي", cmd: "cat file.txt" },
+  { name: "34. إعطاء صلاحيات التشغيل لملف", cmd: "chmod +x script.sh" },
+  { name: "35. تغيير ملكية الملفات", cmd: "chown user:group file" },
+  { name: "36. تشغيل سكربت بايثون", cmd: "python script.py" },
+  { name: "37. تشغيل سكربت بايتوث Bash", cmd: "bash script.sh" },
+  { name: "38. فحص اتصال الشبكة Ping", cmd: "ping google.com" },
+  { name: "39. معرفة آي بي الجهاز الداخلي", cmd: "ifconfig" },
+  { name: "40. معرفة الآي بي الخارجي العام", cmd: "curl ifconfig.me" },
+  { name: "41. تثبيت بيئة Metasploit على Termux", cmd: "pkg install metasploit" },
+  { name: "42. تثبيت أداة Hydar للتخمين", cmd: "pkg install hydra -y" },
+  { name: "43. تثبيت أداة Tshark لتحليل الحزم", cmd: "pkg install tshark -y" },
+  { name: "44. تثبيت أداة Tor للتخفي", cmd: "pkg install tor -y" },
+  { name: "45. تثبيت محرك Node.js", cmd: "pkg install nodejs -y" },
+  { name: "46. البحث عن حزمة معينة بالسيستم", cmd: "pkg search package_name" },
+  { name: "47. إعادة تشغيل جلسة Termux", cmd: "exec bash" },
+  { name: "48. الخروج من التطبيق", cmd: "exit" },
+  { name: "49. تغيير كلمة سر المستخدم", cmd: "passwd" },
+  { name: "50. تثبيت بيئة Root وهمية Proot", cmd: "pkg install proot-distro -y" }
+];
+
+const kaliCmds = [
+  { name: "1. تحديث قاعدة بيانات المستودعات", cmd: "sudo apt update" },
+  { name: "2. ترقية جميع البرامج والنظام", cmd: "sudo apt upgrade -y" },
+  { name: "3. التحديث الشامل مع التوزيعة", cmd: "sudo apt dist-upgrade -y" },
+  { name: "4. فحص الأجهزة المجهزة بالشبكة Nmap", cmd: "nmap -sn 192.168.1.0/24" },
+  { name: "5. فحص المنافذ المفتوحة والخدمات", cmd: "nmap -sV -sC -T4 target_ip" },
+  { name: "6. تشغيل إطار الاختراق Metasploit", cmd: "msfconsole" },
+  { name: "7. فحص ثغرات الويب عبر Nikto", cmd: "nikto -h http://example.com" },
+  { name: "8. فحص ثغرات SQL Injection عبر SQLmap", cmd: "sqlmap -u 'http://target.com/page.php?id=1' --dbs" },
+  { name: "9. تخمين مسارات المجلدات عبر Gobuster", cmd: "gobuster dir -u http://target.com -w /usr/share/wordlists/dirb/common.txt" },
+  { name: "10. تخمين المجلدات والمستندات عبر Dirb", cmd: "dirb http://target.com" },
+  { name: "11. تخمين كلمات المرور عبر Hydra SSH", cmd: "hydra -l root -P /usr/share/wordlists/rockyou.txt ssh://target_ip" },
+  { name: "12. اعتراض وحظر الحزم عبر Wireshark", cmd: "wireshark" },
+  { name: "13. كسر التشفير والتخمين بـ John The Ripper", cmd: "john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt" },
+  { name: "14. كسر التشفير باستخدام الكرت Hashcat", cmd: "hashcat -m 0 -a 0 hash.txt rockyou.txt" },
+  { name: "15. كسر حماية شبكات الواي فاي Airgeddon", cmd: "sudo airgeddon" },
+  { name: "16. تفعيل وضع التنصت لكروت الواي فاي", cmd: "sudo airmon-ng start wlan0" },
+  { name: "17. البحث عن شبكات الواي فاي القريبة", cmd: "sudo airodump-ng wlan0mon" },
+  { name: "18. أداة الهندسة الاجتماعية SEToolkit", cmd: "sudo setoolkit" },
+  { name: "19. البحث عن الثغرات بالمستندات Searchsploit", cmd: "searchsploit apache 2.4" },
+  { name: "20. فحص الثغرات التلقائي النواة Nuclei", cmd: "nuclei -u https://example.com" },
+  { name: "21. جلب معلومات الدومين WHOIS", cmd: "whois example.com" },
+  { name: "22. استخراج السجلات عبر Dig", cmd: "dig example.com ANY" },
+  { name: "23. تتبع مسار الحزم Traceroute", cmd: "traceroute target_ip" },
+  { name: "24. استخراج معلمات النطاق Subfinder", cmd: "subfinder -d example.com" },
+  { name: "25. فحص المضيفين عبر Amass", cmd: "amass enum -d example.com" },
+  { name: "26. أداة تحويل عناوين IP لـ Netcat", cmd: "nc -lvp 4444" },
+  { name: "27. تنشيط الجدار الناري UFW", cmd: "sudo ufw enable" },
+  { name: "28. فحص حالة الجدار الناري", cmd: "sudo ufw status" },
+  { name: "29. معرفة كروت الشبكة المتصلة", cmd: "ip a" },
+  { name: "30. تغيير الماك أدرس Macchanger", cmd: "sudo macchanger -r wlan0" },
+  { name: "31. إنشاء مستخدم جديد بالنظام", cmd: "sudo adduser newuser" },
+  { name: "32. منح المستخدم صلاحيات السودو Root", cmd: "sudo usermod -aG sudo newuser" },
+  { name: "33. عرض المساحات المتوفرة بالقرص", cmd: "df -h" },
+  { name: "34. عرض استهلاك الذاكرة العشوائية RAM", cmd: "free -h" },
+  { name: "35. فك ضغط قواميس rockyou.txt", cmd: "sudo gzip -d /usr/share/wordlists/rockyou.txt.gz" },
+  { name: "36. تشغيل سيرفر Apache محلي", cmd: "sudo systemctl start apache2" },
+  { name: "37. تشغيل سيرفر قاعدة بيانات MySQL", cmd: "sudo systemctl start mysql" },
+  { name: "38. إيقاف خدمة معينة بالنظام", cmd: "sudo systemctl stop service_name" },
+  { name: "39. عرض حالة خدمة معينة", cmd: "sudo systemctl status service_name" },
+  { name: "40. إنشاء اتصال VPN عبر OpenVPN", cmd: "sudo openvpn tryhackme.ovpn" },
+  { name: "41. استخراج النصوص المخبأة بالصور Steghide", cmd: "steghide extract -sf image.jpg" },
+  { name: "42. التحقق من التوافق بالهندسة العكسية Ghidra", cmd: "ghidra" },
+  { name: "43. أداة التنصت العكسي Responder", cmd: "sudo responder -I eth0" },
+  { name: "44. أداة تحليل شبكات Cisco Yersinia", cmd: "yersinia -G" },
+  { name: "45. أداة فحص ثغرات الروابط BurpSuite", cmd: "burpsuite" },
+  { name: "46. تحميل حزم أدوات هكر معينة", cmd: "sudo apt install commix -y" },
+  { name: "47. تنظيف مخلفات تثبيت الحزم", cmd: "sudo apt autoremove -y" },
+  { name: "48. مراقبة حركة السيرفر النشطة Netstat", cmd: "netstat -tuln" },
+  { name: "49. عرض السجلات اللحظية للنظام", cmd: "sudo journalctl -xf" },
+  { name: "50. إيقاف تشغيل نظام كالي لينكس", cmd: "sudo poweroff" }
+];
+
+function renderCommands(containerId, cmdList) {
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  container.innerHTML = "";
+  cmdList.forEach(item => {
+    const box = document.createElement('div');
+    box.className = 'command-box';
+    box.innerHTML = `
+      <div class="command-info">
+        <h4>${item.name}</h4>
+        <code>${item.cmd}</code>
+      </div>
+      <button class="copy-btn" onclick="copyCode(this, '${item.cmd}')"><i class="fa-solid fa-copy"></i> نسخ الأمر</button>
+    `;
+    container.appendChild(box);
+  });
+}
+
 function switchPage(pageId, btnElement) {
-document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    if(!btn.classList.contains('hack-alarm-btn')) btn.classList.remove('active');
+  });
 
-const target = document.getElementById(pageId);
-if (target) {
-target.classList.add('active');
-btnElement.classList.add('active');
-window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+  const target = document.getElementById(pageId);
+  if (target) {
+    target.classList.add('active');
+    btnElement.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
-// دالة نسخ الأوامر مع إشعار بصري
+let audioContext;
+let alarmInterval;
+
+function triggerCyberAlarm() {
+  document.body.classList.add('alarm-active');
+  document.getElementById('skullModal').style.display = 'flex';
+  
+  try {
+    if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    alarmInterval = setInterval(() => {
+      let osc = audioContext.createOscillator();
+      let gain = audioContext.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(880, audioContext.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(440, audioContext.currentTime + 0.3);
+      gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+      osc.start();
+      osc.stop(audioContext.currentTime + 0.3);
+    }, 400);
+  } catch(e) {}
+}
+
+function stopAlarm() {
+  document.body.classList.remove('alarm-active');
+  document.getElementById('skullModal').style.display = 'none';
+  if(alarmInterval) clearInterval(alarmInterval);
+}
+
 function copyCode(button, text) {
 navigator.clipboard.writeText(text).then(() => {
 const originalHTML = button.innerHTML;
@@ -610,7 +864,6 @@ button.classList.remove('copied');
 });
 }
 
-// دروس بيئة البرمجة
 const lessonsData = {
 python: {
 title: "دروس Python الأساسية واختبار السكريبتات",
@@ -624,13 +877,18 @@ defaultCode: 'function cyberGreet() {\n let msg = "مرحباً بك في درو
 },
 html: {
 title: "دروس HTML / CSS وتصميم الواجهات",
-desc: "التمرين: تصميم عناصر واجهة مخصصة وعرضها بشكل حي داخل المحرك.",
+desc: "التمرين: تصميم عناصر واجهة مخصصة وععرضها بشكل حي داخل المحرك.",
 defaultCode: '<div style="background:#101a33; padding:15px; border-radius:8px; border:1px solid #00ff88;">\n <h3 style="color:#00ff88;">عنوان تجريبي من HTML</h3>\n <p style="color:#94a3b8;">هذا النص تم عرضه عبر محرر الأكواد المباشر.</p>\n</div>'
 },
 bash: {
 title: "دروس Bash Scripting وأتمتة أوامر Linux",
 desc: "التمرين: كتابة أوامر سكريبت بسيطة لأتمتة فحص النظام.",
 defaultCode: 'echo "بدء فحص النظام الأمني..."\nuname -a\necho "اكتمل الفحص بنجاح!"'
+},
+php: {
+title: "دروس PHP وتطوير خوادم الويب",
+desc: "التمرين: تجربة وطباعة نصوص ومتغيرات خوادم PHP.",
+defaultCode: '<?php\n $user = "CyberAdmin";\n echo "مرحباً بك يا: " . $user;\n?>'
 }
 };
 
@@ -654,112 +912,27 @@ const outputBox = document.getElementById('codeOutput');
 outputBox.innerHTML = "جاري تنفيذ الكود...\n-------------------\n";
 
 try {
-if (currentLang === 'python') {
-if (code.includes('print')) {
-let matches = code.match(/print((.*?))/g);
-let results = [];
-if(matches) {
-matches.forEach(m => {
-let val = m.replace(/print(/, '').replace(/)/, '').replace(/"/g, '').replace(/'/g, '');
-results.push(val);
-});
-}
-outputBox.innerHTML += results.join('\n') + '\n[تم التنفيذ بنجاح - Python 3.12]';
-} else {
-outputBox.innerHTML += "تم تنفيذ الكود البرمجي بنجاح دون أخطاء.";
-}
-} else if (currentLang === 'javascript') {
-let originalLog = console.log;
-let logs = [];
-console.log = function(...args) { logs.push(args.join(' ')); };
-let res = eval(code);
-console.log = originalLog;
-if(res !== undefined) logs.push(res);
-outputBox.innerHTML += (logs.length > 0 ? logs.join('\n') : "تم التنفيذ بنجاح.") + '\n[تم التنفيذ بنجاح - JS Engine]';
-} else if (currentLang === 'html') {
-outputBox.innerHTML = "نتيجة عرض HTML:\n" + code;
-} else if (currentLang === 'bash') {
-outputBox.innerHTML += "Linux Shell Output:\n" + code.replace(/echo/g, '') + "\n[Process completed - Bash Shell]";
-}
-} catch (error) {
-outputBox.innerHTML += "خطأ في تنفيذ الكود:\n" + error.message;
+  if (currentLang === 'javascript') {
+    let logs = [];
+    const customConsole = { log: (...args) => logs.push(args.join(' ')) };
+    const runFn = new Function('console', code);
+    runFn(customConsole);
+    outputBox.innerText += logs.length ? logs.join('\n') : "تم التنفيذ بنجاح دون مخرجات console.log";
+  } else if (currentLang === 'html') {
+    outputBox.innerHTML = code;
+  } else {
+    outputBox.innerText += "معاينة المخرجات الصوتية/التنفيذية للغة " + currentLang.toUpperCase() + ":\n" + code;
+  }
+} catch(err) {
+  outputBox.innerText += "خطأ في التشغيل: " + err.message;
 }
 }
 
-// قاعدة بيانات الثغرات
-const cveDatabase = [
-{ id: "CVE-2026-1024", name: "WordPress Core SQLi", type: "Critical", desc: "ثغرة خطيرة في ووردبريس 6.5" },
-{ id: "CVE-2026-0411", name: "Apache Log4j RCE", type: "Critical", desc: "تنفيذ أكواد عن بعد" },
-{ id: "CVE-2024-3400", name: "Palo Alto PAN-OS Injection", type: "Critical", desc: "ترند 2024-2026 - اختراق جدران الحماية" }
-];
-
-function searchCVE() {
-const query = document.getElementById('cveInput').value.toLowerCase().trim();
-const resultsContainer = document.getElementById('cveResults');
-resultsContainer.innerHTML = "";
-
-if (!query) {
-resultsContainer.innerHTML = '<div class="cve-card" style="justify-content:center;color:#ef4444;">الرجاء إدخال اسم التقنية أو الثغرة للبحث!</div>';
-return;
-}
-
-const filtered = cveDatabase.filter(item =>
-item.id.toLowerCase().includes(query) ||
-item.name.toLowerCase().includes(query) ||
-item.desc.toLowerCase().includes(query)
-);
-
-if (filtered.length === 0) {
-resultsContainer.innerHTML = '<div class="cve-card" style="justify-content:center;color:#ef4444;">لم يتم العثور على نتائج تطابق بحثك.</div>';
-return;
-}
-
-filtered.forEach(cve => {
-const card = document.createElement('div');
-card.className = 'cve-card';
-card.innerHTML = <div class="cve-info"&gt;&lt;h4&gt;${cve.id} : ${cve.name}&lt;/h4&gt;&lt;p&gt;${cve.desc}</p></div><span class="cve-badge">${cve.type}&lt;/span>;
-resultsContainer.appendChild(card);
-});
-}
-
-// خلفية الماتريكس
-const canvas = document.getElementById('matrixCanvas');
-const ctx = canvas.getContext('2d');
-const fontSize = 16;
-let columns = 0;
-const drops = [];
-
-function resizeCanvas() {
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-columns = Math.floor(canvas.width / fontSize);
-drops.length = columns;
-for(let i = 0; i < columns; i++) {
-if(!drops[i]) drops[i] = 1;
-}
-}
-
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-const chars = "0101010101XYZABCDEFcybersec007";
-
-function drawMatrix() {
-ctx.fillStyle = 'rgba(8, 14, 29, 0.1)';
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-ctx.fillStyle = '#00ff88';
-ctx.font = fontSize + 'px monospace';
-
-for (let i = 0; i < drops.length; i++) {
-const text = chars.charAt(Math.floor(Math.random() * chars.length));
-ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-drops[i] = 0;
-}
-drops[i]++;
-}
-}
-setInterval(drawMatrix, 50);
+window.onload = function() {
+  renderArsenalTools();
+  renderCommands('termuxCommandsList', termuxCmds);
+  renderCommands('kaliCommandsList', kaliCmds);
+};
 </script>
 </body>
-  </html>
+</html>
